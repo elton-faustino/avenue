@@ -38,13 +38,15 @@ namespace pizza.api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult create([FromBody] Order inputModel)
+        public IActionResult create([FromBody] OrderRequest inputModel)
         {
             if (inputModel == null)
                 return BadRequest();
 
-            inputModel.Id = service.Get().Max(_ => _.Id) + 1;
-            service.AddFilme(inputModel);
+            Order order = inputModel.Adapt(inputModel);
+
+            order.Id = service.Get().Max(_ => _.Id) + 1;
+            service.AddFilme(order);
 
             return Ok(inputModel);
         }
