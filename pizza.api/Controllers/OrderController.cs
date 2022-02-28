@@ -38,7 +38,7 @@ namespace pizza.api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult createnew([FromBody] Order inputModel)
+        public IActionResult create([FromBody] Order inputModel)
         {
             if (inputModel == null)
                 return BadRequest();
