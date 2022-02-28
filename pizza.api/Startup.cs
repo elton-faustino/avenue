@@ -32,9 +32,9 @@ namespace pizza.api
             {
                 options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title = "Place Info Service API",
+                    Title = "Pizza Challenge",
                     Version = "v2",
-                    Description = "Sample service for Learner",
+                    Description = "Pizza order API",
                 });
             });
 
@@ -44,13 +44,13 @@ namespace pizza.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-if (env.IsDevelopment()) app.UseDeveloperExceptionPage();  
-    app.UseHttpsRedirection();  
-    app.UseRouting();  
-    app.UseAuthorization();  
-    app.UseEndpoints(endpoints =>{endpoints.MapControllers();});  
-    app.UseSwagger();  
-    app.UseSwaggerUI(options =>options.SwaggerEndpoint("/swagger/v2/swagger.json", "OrderController")); 
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSwagger();
+            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "OrderController"));
         }
     }
 }
