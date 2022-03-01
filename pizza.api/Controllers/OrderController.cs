@@ -46,7 +46,7 @@ namespace pizza.api.Controllers
             Order order = inputModel.Adapt(inputModel);
 
             order.Id = service.Get().Max(_ => _.Id) + 1;
-            service.AddFilme(order);
+            service.Add(order);
 
             return Ok(inputModel);
         }
