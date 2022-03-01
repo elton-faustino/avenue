@@ -1,6 +1,7 @@
 ﻿using pizza.api.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace pizza.api.Service
 {
@@ -22,33 +23,34 @@ namespace pizza.api.Service
             }
         }
 
-        public void Add(Order item)
+        public async Task Add(Order item)
         {
             this.orders.Add(item);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var model = this.orders.Where(m => m.Id == id).FirstOrDefault();
+            
             this.orders.Remove(model);
         }
 
-        public List<Order> Get()
+        public async Task<List<Order>> Get()
         {
             return this.orders.ToList();
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetById(int id)
         {
             return this.orders.Where(m => m.Id == id).FirstOrDefault();
         }
 
-        public bool OrderExists(int id)
+        public async Task<bool> OrderExists(int id)
         {
             return this.orders.Any(m => m.Id == id);
         }
 
-        public void Update(Order item)
+        public async Task Update(Order item)
         {
             var model = this.orders.Where(m => m.Id == item.Id).FirstOrDefault();
 

@@ -1,15 +1,16 @@
 ﻿using pizza.api.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace pizza.api.Service
 {
     public interface IOrderService
     {
-        List<Order> Get();
-        Order GetById(int id);
-        void Add(Order item);
-        void Update(Order item);
-        void Delete(int id);
-        bool OrderExists(int id);
+        Task<List<Order>> Get();
+        Task<Order> GetById(int id);
+        Task Add(Order item);
+        Task Update(Order item);
+        Task Delete(int id);
+        Task<bool> OrderExists(int id);
     }
 }

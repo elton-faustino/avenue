@@ -2,6 +2,7 @@
 using pizza.api.Models;
 using pizza.api.Service;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace pizza.api.Controllers
 {
@@ -9,8 +10,8 @@ namespace pizza.api.Controllers
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
-
         private readonly IOrderService service;
+
         public OrderController(IOrderService service)
         {
             this.service = service;
@@ -18,18 +19,18 @@ namespace pizza.api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult get()
+        public async Task<IActionResult> Get()
         {
-            var model = service.Get();
+            var model = await service.Get();
 
             return Ok(model);
         }
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult getbyid([FromQuery]int id)
+        public async Task<IActionResult> GetById([FromQuery]int id)
         {
-            var model = service.GetById(id);
+            var model = await service.GetById(id);
             if (model == null)
                 return NotFound();
 
@@ -38,39 +39,45 @@ namespace pizza.api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult create([FromBody] OrderRequest inputModel)
+        public async Task<IActionResult> Create([FromBody] OrderRequest inputModel)
         {
             if (inputModel == null)
                 return BadRequest();
 
-            Order order = inputModel.Adapt(inputModel);
+            var order = inputModel.Adapt(inputModel);
 
-            order.Id = service.Get().Max(_ => _.Id) + 1;
-            service.Add(order);
+            var fullList = await service.Get();
+
+            order.Id = fullList.Max(_ => _.Id) + 1;
+            
+            await service.Add(order);
 
             return Ok(inputModel);
         }
 
         [HttpPut]
         [Route("[action]")]
-        public IActionResult update([FromBody] Order inputModel)
+        public async Task<IActionResult> Update([FromBody] Order inputModel)
         {
             if (inputModel == null)
                 return BadRequest();
-            if (!service.OrderExists(inputModel.Id))
+            
+            if (!service.OrderExists(inputModel.Id).Result)
                 return NotFound();
 
-            service.Update(inputModel);
+            await service.Update(inputModel);
             return Ok();
         }
 
         [HttpDelete]
         [Route("[action]")]
-        public IActionResult delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (!service.OrderExists(id))
+            if (!service.OrderExists(id).Result)
                 return NotFound();
-            service.Delete(id);
+
+            await service.Delete(id);
+
             return Ok();
         }
 
