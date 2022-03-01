@@ -22,7 +22,7 @@ namespace pizza.api.Service
             }
         }
 
-        public void AddFilme(Order item)
+        public void Add(Order item)
         {
             this.orders.Add(item);
         }

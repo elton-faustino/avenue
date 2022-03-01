@@ -7,7 +7,7 @@ namespace pizza.api.Service
     {
         List<Order> Get();
         Order GetById(int id);
-        void AddFilme(Order item);
+        void Add(Order item);
         void Update(Order item);
         void Delete(int id);
         bool OrderExists(int id);
